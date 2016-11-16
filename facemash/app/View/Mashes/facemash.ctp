@@ -6,7 +6,8 @@
         
 	$image_mash2=$this->Html->image('fleurs/'.$photo_mash2,
         array('alt' => 'Mash2'));
- 
+
+	 
 ?>
 	<div class="row">
 		<div class="large-6 columns">
@@ -21,7 +22,7 @@
 				        'controller' => 'Mashes',
 				        'action' => 'saveNewRatings'
 				    	,$id_mash1, $id_mash2), 
-                         
+                        
 				    array(
 				        'escape' => false,
 				        'id'=>'left_link'
@@ -49,3 +50,27 @@
 		</div>
 
 	</div>
+
+	<script>
+
+        function leftArrowPressed() {
+		   document.getElementById('left_link').click();
+		}
+
+		function rightArrowPressed() {
+		   document.getElementById('right_link').click();
+		}
+
+		document.onkeydown = function(evt) {
+		    evt = evt || window.event;
+		    switch (evt.keyCode) {
+		        case 37:
+		            leftArrowPressed();
+		            break;
+		        case 39:
+		            rightArrowPressed();
+		            break;
+		    }
+		};
+
+	</script>

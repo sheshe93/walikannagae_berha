@@ -11,15 +11,22 @@ class MashesController extends AppController {
     public $components = array('Session');  
  
 
-
+public function isAuthorized($user) {
+    // Admin peut accéder à toute action
+    if (isset($user['role']) && $user['role'] === 'admin') {
+        return true;
+    }
+     
+    // Refus par défaut
+    return false;
+}
 
 public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 
 	if(!empty($id_winner)&&!empty($id_loser)){
 		if($id_winner==$id_loser){
-			
-			return $this->redirect(array(
+		 	return $this->redirect(array(
                 'controller' => 'Mashes',
                 'action' => 'facemash')
             );
@@ -33,10 +40,8 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 			 
 			if (is_numeric($winner_score)&&is_numeric($loser_score)){
-				  
- 			    	$rating = new Rating($winner_score,$loser_score,1,0); 
-                 
-         			$new_ratings=$rating->getNewRatings(); 
+				 $rating = new Rating($winner_score,$loser_score,1,0); 
+				 $new_ratings=$rating->getNewRatings(); 
                     
         			 $new_winner_score=$new_ratings['a'];
         			$new_loser_score=$new_ratings['b'];
@@ -44,15 +49,20 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
  				$winner['Mash']['score']=$new_winner_score;
 				$loser['Mash']['score']=$new_loser_score;
 
+				
 				if (($this->Mash->save($winner))&&($this->Mash->save($loser))){
-					 return $this->redirect(array(
-                        'controller' => 'Mashes',
-                        'action' => 'facemash'));
- 				}
-				else {
-					return false;
-			
-				}
+    											
+	 $nb_votes = $this->Session->read('Mashes.nb_votes') + 1;
+    
+ 	$this->Session->write('Mashes.nb_votes', $nb_votes);
+    
+   
+	return $this->redirect(array('controller' => 'Mashes', 'action' => 'facemash'));
+ }
+else {
+	return false;
+
+}
 			}
 			else {
 				throw new NotFoundException('Non Numeric rating');
@@ -67,25 +77,34 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 
 public function add() {
+	
+
+
+
+
 	if ($this->request->is('post')) {
-         $this->Mash->create();
-        $description=$this->request->data['Mash']['description'];
+           
+		$this->Mash->create();
+         $description=$this->request->data['Mash']['description'];
 		
 		if (!empty($description)){
                 
-			if ($this->uploadFile($description) 
+			if ($this->uploadFile($description)  
                 && $this->Mash->save($this->request->data)) {
                 
+                 
                 
 				$this->Session->setFlash(__('Fleur de facemash ajoutée'));
-				return $this->redirect(array('action' => 'facemash'));
- 			} else {
- 				$this->Session->setFlash(__('Erreur d\'ajout de photo. merci de réessayer. Si la photo est trop grosse vous pouvez la resizer (www.picresize.com)'));
+				 
+			} else {
+                
+				$this->Session->setFlash(__('Erreur d\'ajout de photo. merci de réessayer. Si la photo est trop grosse vous pouvez la resizer (www.picresize.com)'));
 			}
 		} 
 
 		else {
- 			$this->Session->setFlash(__('Problème de nom de photo.'));
+           
+			$this->Session->setFlash(__('Problème de nom de photo.'));
 		}
 	}
 
@@ -95,8 +114,7 @@ public function add() {
 }
 
 function uploadFile($description) {
- 
- 			$file = $this->data['Mash']['photo_file'];
+	 	$file = $this->data['Mash']['photo_file'];
 
  			$random_three_numbers=rand(1,999);
 		 
@@ -105,14 +123,14 @@ function uploadFile($description) {
 		$filename=$random_three_numbers.'_'.$slug_nom_photo.'_'.$file['name'];
 	
   	if ($file['error'] === UPLOAD_ERR_OK) {  
-  		$allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+
+      	$allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
 		$detectedType = exif_imagetype($file['tmp_name']);
 		$error = !in_array($detectedType, $allowedTypes);
-     
+         
 	    if (move_uploaded_file($file['tmp_name'],
             APP.'webroot/img/fleurs'.DS.$filename)&&!$error) {
-	  
-
+	    	 
 		      $this->request->data['Mash']['nom_photo'] = $filename;
 		      $this->request->data['Mash']['description'] = $description;
 
@@ -128,9 +146,9 @@ public function facemash_scores(){
 
     $scores= $this->Mash->find('all', array(
         'order'=>'Mash.score DESC'));
-        
+         
         $this->set(compact('scores'));
- 
+       
         $content_table="Classement complet : FaceMash des fleurs";
         $this->set(compact('content_table'));
     }

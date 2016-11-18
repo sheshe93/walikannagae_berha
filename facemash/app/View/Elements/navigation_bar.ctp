@@ -9,12 +9,45 @@
     <section class="top-bar-section">
       <!-- Right Nav Section -->
       <ul class="right">
-       
+
+      <?php if($loggedIn){ ?>
+
+        <li class='active'>
+            <?php
+
+              echo $this->Html->link('Deconnexion', array(
+                'controller' => 'Users',
+                'action'=>'logout'));
+            ?>
+       </li>
+
+
+      
+     <?php }else{?>
+    
+
+      <li class='active'>
+
+
+            <?php
+
+              echo $this->Html->link('Enregistrer', array(
+                'controller' => 'Users',
+                'action'=>'register'));
+            ?>
+      </li>
+
+     <?php } ?>
+
+
       </ul>
+
+
+
 
       <!-- Left Nav Section -->
       <ul class="left">
-        <li class='active'>
+        <li >
           <?php
             echo $this->Html->link('Votez !', array(
               'controller' => 'Mashes',
@@ -28,12 +61,18 @@
               'action'=>'facemash_scores'));
           ?>
         </li>
+
+
         <li>
           <?php
+
+          if($isAdmin){
             echo $this->Html->link('Ajouter une photo', array(
               'controller' => 'Mashes',
               'action'=>'add'));
+          }
           ?>
+          
         </li>
       </ul>
     </section>

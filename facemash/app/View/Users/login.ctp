@@ -1,4 +1,4 @@
-<div class="users form">
+<div class="users form large 4 medium 4 large-pffset-4 medium-offset4 columns">
 <?php echo $this->Flash->render('auth'); ?>
 <?php echo $this->Form->create('User'); ?>
     <fieldset>

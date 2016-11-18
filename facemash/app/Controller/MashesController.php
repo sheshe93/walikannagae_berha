@@ -80,36 +80,45 @@ public function add() {
 	
 
 
+if($this->Auth->user('role')=='admin'){
 
 
-	if ($this->request->is('post')) {
-           
-		$this->Mash->create();
-         $description=$this->request->data['Mash']['description'];
-		
-		if (!empty($description)){
-                
-			if ($this->uploadFile($description)  
-                && $this->Mash->save($this->request->data)) {
-                
-                 
-                
-				$this->Session->setFlash(__('Fleur de facemash ajoutée'));
-				 
-			} else {
-                
-				$this->Session->setFlash(__('Erreur d\'ajout de photo. merci de réessayer. Si la photo est trop grosse vous pouvez la resizer (www.picresize.com)'));
+		if ($this->request->is('post')) {
+	           
+			$this->Mash->create();
+	         $description=$this->request->data['Mash']['description'];
+			
+			if (!empty($description)){
+	                
+				if ($this->uploadFile($description)  
+	                && $this->Mash->save($this->request->data)) {
+	                
+	                 
+	                
+					$this->Session->setFlash(__('Photo de facemash ajoutée'));
+					 
+				} else {
+	                
+					$this->Session->setFlash(__('Erreur d\'ajout de photo. merci de réessayer. Si la photo est trop grosse vous pouvez la resizer (www.picresize.com)'));
+				}
+			} 
+
+			else {
+	           
+				$this->Session->setFlash(__('Problème de nom de photo.'));
 			}
-		} 
-
-		else {
-           
-			$this->Session->setFlash(__('Problème de nom de photo.'));
 		}
+
+		$content_table="Ajouter une nouvelle photo";
+		$this->set(compact('content_table'));
+
+	}else{
+				$this->Session->setFlash(__('Seuls les admins peuvent ajouter des photos, regarde plutot le classement '));
+				return $this->redirect(array('action' => 'facemash'));
+
 	}
 
-	$content_table="Ajouter une nouvelle photo";
-	$this->set(compact('content_table'));
+
 
 }
 
@@ -166,6 +175,8 @@ public function facemash() {
         
         if ($id_mash1==$id_mash2){
  			return $this->redirect(array('action' => 'facemash'));
+		}elseif($this->Session->read('Mashes.nb_votes')>10){
+			return $this->redirect(array('action' => 'facemash_scores'));
 		}
 
 	 $photo_mash1=$mash1['Mash']['nom_photo'];

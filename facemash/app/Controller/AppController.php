@@ -3,6 +3,8 @@
 
 App::uses('Controller', 'Controller');
  
+
+ 
 class AppController extends Controller {
 
  
@@ -15,23 +17,27 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+        $this->Auth->allow('index', 'view','register');
     }
     
+    public function beforeRender(){
 
- 
+         if($this->Auth->user('role')=='admin'){
+            $this->set('loggedIn',true);
+            $this->set('isAdmin',true);
 
-public function isAuthorized($user) {
-    // Admin peut accéder à toute action
-    if (isset($user['role']) && $user['role'] === 'admin') {
-        return true;
-    }
-     
-    // Refus par défaut
-    return false;
-}
+             
+         }elseif($this->Auth->user('role')=='voteur'){
+            $this->set('loggedIn',true);
+            $this->set('isAdmin',false);
+         }
+         else {
+             $this->set('loggedIn',false);
+             $this->set('isAdmin',false);
 
+         }
+          
+        
 
-
-
+     }
 }

@@ -8,8 +8,15 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-         $this->Auth->allow('add', 'logout');
+         $this->Auth->allow('register', 'logout');
     }
+
+
+
+
+
+
+
 
     public function login() {
         if ($this->request->is('post')) {
@@ -38,6 +45,25 @@ class UsersController extends AppController {
         }
         $this->set('user', $this->User->findById($id));
     }
+
+    public function register(){
+
+    if ($this->request->is('post')) {
+                $this->User->create();
+                if ($this->User->save($this->request->data)) {
+                    $this->Flash->success('Enregistrement effectué');
+                    return $this->redirect(array('action' => 'login'));
+                } else {
+                    $this->Flash->error(__('Erreur enregistrement raté.'));
+                }
+            }
+
+
+    }
+
+
+
+
     public function add() {
             if ($this->request->is('post')) {
                 $this->User->create();
@@ -69,9 +95,7 @@ class UsersController extends AppController {
         }
 
         public function delete($id = null) {
-            // Avant 2.5, utilisez
-            // $this->request->onlyAllow('post');
-
+            
             $this->request->allowMethod('post');
 
             $this->User->id = $id;

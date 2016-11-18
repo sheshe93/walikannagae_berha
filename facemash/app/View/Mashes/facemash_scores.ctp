@@ -1,22 +1,18 @@
-<?php
-    echo $this->Html->link(
-		'Retourner au vote !',
-		array(
-			'controller'=>'Mashes',
-			'action'=>'facemash'
-			),
-		array(
-			'class' => 'button success'
-			)
-	);
-?>
+ 
+</br>
+</br>
+<h2>Voici la liste dans l'ordre décroissant :</h2>
 
 </br>
 </br>
+
 
 <?php
  	$i=1;
 ?>
+
+
+
 <div class="row"> 
 	<div class="large-3 columns"></div>
 	<div class="large-6 columns">

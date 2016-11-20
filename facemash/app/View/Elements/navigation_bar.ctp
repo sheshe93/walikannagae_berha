@@ -67,12 +67,20 @@
           <?php
 
           if($isAdmin){
-            echo $this->Html->link('Ajouter une photo', array(
+            echo $this->Html->link('Images', array(
               'controller' => 'Mashes',
-              'action'=>'add'));
-          }
+              'action'=>'adminImg'));
+           
           ?>
           
+        </li>
+
+        <li>
+          <?php echo $this->Html->link('User', array(
+              'controller' => 'Users',
+              'action'=>'adminUser'));
+        }
+          ?>
         </li>
       </ul>
     </section>

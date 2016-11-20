@@ -1,6 +1,8 @@
 <?php
 
-
+App::uses('AppController', 'Controller');
+App::uses('Rating','Lib');
+App::uses('CakeTime','Utility');
 
 
 class UsersController extends AppController {
@@ -12,7 +14,17 @@ class UsersController extends AppController {
     }
 
 
+public function adminUser() {
+        
+    $scores= $this->User->find('all', array(
+        'order'=>'User.id ASC'));
+         
+        $this->set(compact('scores'));
+       
+        $content_table="Classement complet :";
+        $this->set(compact('content_table'));
 
+    }
 
 
 
@@ -76,6 +88,7 @@ class UsersController extends AppController {
             }
         }
 
+
         public function edit($id = null) {
             $this->User->id = $id;
             if (!$this->User->exists()) {
@@ -94,7 +107,8 @@ class UsersController extends AppController {
             }
         }
 
-        public function delete($id = null) {
+
+        public function delete($id) {
             
             $this->request->allowMethod('post');
 
@@ -109,7 +123,6 @@ class UsersController extends AppController {
             $this->Flash->error(__('L\'user n\'a pas été supprimé'));
             return $this->redirect(array('action' => 'index'));
         }
-
 
 
 

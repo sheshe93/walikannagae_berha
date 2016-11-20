@@ -4,7 +4,8 @@
         <legend><?php echo __('Veuillez vous enregistrer'); ?></legend>
         <?php echo $this->Form->input('username');
         echo $this->Form->input('password');
-          $this->Form->input('voteur');
+       
+        echo $this->Form->hidden('role',array('default'=>'voteur'));
         ;
     ?>
     </fieldset>

@@ -51,11 +51,15 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 				
 				if (($this->Mash->save($winner))&&($this->Mash->save($loser))){
-    											
+    
+
+
 	 $nb_votes = $this->Session->read('Mashes.nb_votes') + 1;
     
  	$this->Session->write('Mashes.nb_votes', $nb_votes);
-    
+     
+     
+
    
 	return $this->redirect(array('controller' => 'Mashes', 'action' => 'facemash'));
  }
@@ -162,6 +166,21 @@ public function facemash_scores(){
         $this->set(compact('content_table'));
     }
 
+
+
+
+
+public function adminImg() {
+	$scores= $this->Mash->find('all', array(
+        'order'=>'Mash.score DESC'));
+         
+        $this->set(compact('scores'));
+       
+        $content_table="Classement complet :";
+        $this->set(compact('content_table'));
+
+ 		 
+}
 
 
 public function facemash() {

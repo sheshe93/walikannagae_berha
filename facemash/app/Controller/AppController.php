@@ -22,6 +22,10 @@ class AppController extends Controller {
     
     public function beforeRender(){
 
+        $this->set('vote',$this->Auth->user('vote'));
+
+
+
          if($this->Auth->user('role')=='admin'){
             $this->set('loggedIn',true);
             $this->set('isAdmin',true);

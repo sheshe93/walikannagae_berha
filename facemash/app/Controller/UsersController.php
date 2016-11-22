@@ -10,25 +10,41 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-         $this->Auth->allow('register', 'logout');
+         $this->Auth->allow('register', 'logout','login');
     }
 
 
-public function adminUser() {
+    
+
+    public function edit($id) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('User Invalide'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->User->save($this->request->data)) {
+                $this->Flash->success(__('L\'user a été sauvegardé'));
+                return $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Flash->error(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
+            }
+        } else {
+            $this->request->data = $this->User->findById($id);
+            unset($this->request->data['User']['password']);
+        }
+    }
+
+public function admin() {
         
     $scores= $this->User->find('all', array(
         'order'=>'User.id ASC'));
          
         $this->set(compact('scores'));
        
-        $content_table="Classement complet :";
-        $this->set(compact('content_table'));
-
+    
     }
 
-
-
-
+ 
 
     public function login() {
         if ($this->request->is('post')) {
@@ -74,7 +90,24 @@ public function adminUser() {
     }
 
 
+public function supuser() {
+        
+    $scores= $this->User->find('all', array(
+        'order'=>'User.id ASC'));
+         
+        $this->set(compact('scores'));
+       
+       
 
+        if ($this->request->is('post')) {
+             
+             $this->User->delete($this->request->data['User']['id']);
+             
+           return $this->redirect(array(
+                'controller' => 'Users',
+                'action'=>'admin'));
+    }
+    }
 
     public function add() {
             if ($this->request->is('post')) {
@@ -89,26 +122,10 @@ public function adminUser() {
         }
 
 
-        public function edit($id = null) {
-            $this->User->id = $id;
-            if (!$this->User->exists()) {
-                throw new NotFoundException(__('User Invalide'));
-            }
-            if ($this->request->is('post') || $this->request->is('put')) {
-                if ($this->User->save($this->request->data)) {
-                    $this->Flash->success(__('L\'user a été sauvegardé'));
-                    return $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->Flash->error(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
-                }
-            } else {
-                $this->request->data = $this->User->findById($id);
-                unset($this->request->data['User']['password']);
-            }
-        }
 
 
-        public function delete($id) {
+
+        public function delete($id =null) {
             
             $this->request->allowMethod('post');
 

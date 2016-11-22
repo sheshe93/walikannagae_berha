@@ -5,7 +5,7 @@
 </br>
 <h2>Voter pour votre image préférée</h2>
 <p> Vous pouvez cliquez sur l'image préférée ou utiliser les fleches de droite et gauche pour faire votre choix.<p>
-	<p>Vous avez le droit que à 10 votes </p>
+	<p>Vous avez le droit à 10 votes </p>
 
 </br>
 </br>

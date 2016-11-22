@@ -31,7 +31,21 @@
 
             <?php
 
-              echo $this->Html->link('Enregistrer', array(
+              echo $this->Html->link("Se Connecter", array(
+                'controller' => 'Users',
+                'action'=>'login'));
+            ?>
+      </li>
+
+      <li >
+
+
+            <?php
+
+             
+
+
+              echo $this->Html->link("S'inscrire", array(
                 'controller' => 'Users',
                 'action'=>'register'));
             ?>
@@ -69,16 +83,16 @@
           if($isAdmin){
             echo $this->Html->link('Images', array(
               'controller' => 'Mashes',
-              'action'=>'adminImg'));
+              'action'=>'admin'));
            
           ?>
           
         </li>
 
         <li>
-          <?php echo $this->Html->link('User', array(
+          <?php echo $this->Html->link('Utilisateurs', array(
               'controller' => 'Users',
-              'action'=>'adminUser'));
+              'action'=>'admin'));
         }
           ?>
         </li>

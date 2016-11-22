@@ -1,7 +1,12 @@
-<div class="users form">
+
+
+	
+<div class='row'>
+<div class="large-6 columns"> 
+<div class="registerform">
 <?php echo $this->Form->create('User');?>
     <fieldset>
-        <legend><?php echo __('Veuillez vous enregistrer'); ?></legend>
+        <legend><?php echo __('Veuillez vous inscrire'); ?></legend>
         <?php echo $this->Form->input('username');
         echo $this->Form->input('password');
        
@@ -10,4 +15,4 @@
     ?>
     </fieldset>
 <?php echo $this->Form->end(__('Enregistrer'));?>
-</div>
+</div></div></div>

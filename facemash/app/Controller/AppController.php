@@ -22,7 +22,7 @@ class AppController extends Controller {
     
     public function beforeRender(){
 
-        $this->set('vote',$this->Auth->user('vote'));
+        
 
 
 
@@ -40,8 +40,10 @@ class AppController extends Controller {
              $this->set('isAdmin',false);
 
          }
-          
         
+        $this->set('idlog',$this->Auth->user('id'));
+
+        $this->set('vote',$this->Auth->user('vote'));
 
      }
 }

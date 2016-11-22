@@ -1,10 +1,6 @@
+<?php if($isAdmin){ ?>
 
-</br>
-</br>
-<h2>Voici le tableau des utilisateurs</h2>
-
-</br>
-</br>
+ 
 
 
 <div class="row"> 
@@ -18,6 +14,7 @@
 			<th>Nom</th>
 			<th>role</th>
 			<th>cree le </th>
+			
 			<th>delete </th>
 		</tr>
 
@@ -29,17 +26,18 @@
 	<?php	foreach ($scores as $user) {  ?>
  
 		<tr>
+			<?php echo $this->Form->create('User');?>
 			 
 		<td><?php echo $user['User']['id'];?></td>
-		<input type="hidden" name="id" value="<?php echo $user['User']['id'];?>"></input>
+		<?php echo $this->Form->hidden('id', array('default'=>$user['User']['id']));?></input>
 
 		<td><?php echo $user['User']['username']; ?> </td>
-		<input type="hidden" name="username" value="text"></input>
+ 		<?php echo $this->Form->hidden('username', array('default'=>$user['User']['username']));?>
 		<td><?php echo $user['User']['role']; ?> </td>
+		<?php echo $this->Form->hidden('role', array('default'=>$user['User']['role']));?>
 		<td><?php echo $user['User']['created'];?></td>
-		<td><?php   echo $this->Html->link('supprimer', array(
-              'controller' => 'Users',
-              'action'=>'delete')); ?></td>
+		
+		<td><?php  echo $this->Form->end(__('delete'));   ?></td>
 		 
 		</tr>
  
@@ -59,3 +57,8 @@
 	<div class='large-3 columns'></div>
 </div>
 
+<?php }else{
+
+	echo '<h1> Non authorisé à acceder à cette page</h1>';
+}
+?>

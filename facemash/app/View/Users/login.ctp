@@ -1,4 +1,11 @@
-<div class="users form large 4 medium 4 large-pffset-4 medium-offset4 columns">
+
+<div class="row"> 
+ 
+	<div class="large-6 columns">
+	<div class='row'>
+		<div class='large-12 columns'>
+
+ 
 <?php echo $this->Flash->render('auth'); ?>
 <?php echo $this->Form->create('User'); ?>
     <fieldset>
@@ -10,4 +17,4 @@
     ?>
     </fieldset>
 <?php echo $this->Form->end(__('Login')); ?>
-</div>
+ </div></div></div>

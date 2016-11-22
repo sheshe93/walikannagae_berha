@@ -51,17 +51,18 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 				
 				if (($this->Mash->save($winner))&&($this->Mash->save($loser))){
-    
+    		
+ 				
+ 	  	    
+  		 
+ 		echo  $this->user($id);
 
+	 //  $this->Session->read('Mashes.nb_votes') + 1;
+    	 
+ 	 // $this->Session->write('Mashes.nb_votes', $nb_votes);
+   return $this->redirect(array('controller' => 'Mashes', 'action' => 'facemash'));
+ 
 
-	 $nb_votes = $this->Session->read('Mashes.nb_votes') + 1;
-    
- 	$this->Session->write('Mashes.nb_votes', $nb_votes);
-     
-     
-
-   
-	return $this->redirect(array('controller' => 'Mashes', 'action' => 'facemash'));
  }
 else {
 	return false;
@@ -170,17 +171,68 @@ public function facemash_scores(){
 
 
 
-public function adminImg() {
-	$scores= $this->Mash->find('all', array(
+public function admin() {
+		$scores= $this->Mash->find('all', array(
         'order'=>'Mash.score DESC'));
          
         $this->set(compact('scores'));
        
-        $content_table="Classement complet :";
-        $this->set(compact('content_table'));
+
+
+         if ($this->request->is('post')) {
+
+            $this->Mash->delete($this->request->data['Mash']['id']);
+             
+           return $this->redirect(array(
+                'controller' => 'Mashes',
+                'action'=>'admin'));
+    }
 
  		 
 }
+
+
+
+public function supimg(){
+$scores= $this->Mash->find('all', array(
+        'order'=>'Mash.score DESC'));
+         
+        $this->set(compact('scores'));
+       
+
+
+         if ($this->request->is('post')) {
+
+            $this->Mash->delete($this->request->data['Mash']['id']);
+             
+           return $this->redirect(array(
+                'controller' => 'Mashes',
+                'action'=>'admin'));
+    }
+}
+
+
+
+public function edit (){
+
+	 $this->Mash->id = $id;
+        if (!$this->Mash->exists()) {
+            throw new NotFoundException(__('Photo Invalide'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Mash->save($this->request->data)) {
+                $this->Flash->success(__('La photo a été modifié'));
+                return $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Flash->error(__('La photo n\'a pas été  modifié. Merci de réessayer.'));
+            }
+        } else {
+            $this->request->data = $this->MAsh->findById($id);
+           
+        }
+
+}
+
 
 
 public function facemash() {

@@ -5,6 +5,8 @@
 
     <?php
 		
+
+		
 		$nb_votes=$vote;
 		//$this->Session->read('Mashes.nb_votes');
   		$reste=10-$nb_votes;
@@ -15,7 +17,7 @@
 
 		elseif ($nb_votes<10){
 
-			$vote_text='<p>Tu as voté '.$nb_votes.' fois il ne te reste plus que '.$reste.' votes</p>';	
+			$vote_text='<p>Tu as voté '.$nb_votes.' fois, il ne te reste plus que '.$reste.' votes</p>';	
 		} 
 		elseif ($nb_votes=10) {
 			$vote_text='<h5>Tu ne peux plus voter tu as dépassé les 10 votes, merci d \'avoir participer</h5> ';

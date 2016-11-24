@@ -3,7 +3,7 @@
 
 App::uses('Controller', 'Controller');
  
-
+App::import('Model','User');
  
 class AppController extends Controller {
 
@@ -22,9 +22,6 @@ class AppController extends Controller {
     
     public function beforeRender(){
 
-        
-
-
 
          if($this->Auth->user('role')=='admin'){
             $this->set('loggedIn',true);
@@ -41,9 +38,17 @@ class AppController extends Controller {
 
          }
         
+
+
+                    $user=new user();
+                    $user->id=$this->Auth->user('id');
+                    $refreshvote=$user->read('vote');
+                    
+                   
+
         $this->set('idlog',$this->Auth->user('id'));
 
-        $this->set('vote',$this->Auth->user('vote'));
+        $this->set('vote',$refreshvote['User']['vote']);
 
      }
 }

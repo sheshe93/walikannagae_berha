@@ -4,8 +4,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $cakeDescription ?>:
-		<?php echo $title_for_layout; ?>
+	Facemash
 	</title>
 	<?php
 		echo $this->Html->meta('icon');

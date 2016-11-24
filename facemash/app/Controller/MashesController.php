@@ -4,12 +4,17 @@
 App::uses('AppController', 'Controller');
 App::uses('Rating','Lib');
 App::uses('CakeTime','Utility');
+App::uses('User','Controller');
 
+
+
+App::import('Model','User');
 
 class MashesController extends AppController {
 
     public $components = array('Session');  
  
+
 
 public function isAuthorized($user) {
     // Admin peut accéder à toute action
@@ -20,6 +25,10 @@ public function isAuthorized($user) {
     // Refus par défaut
     return false;
 }
+
+ 
+
+
 
 public function saveNewRatings($id_winner=null, $id_loser=null) {
 
@@ -51,15 +60,20 @@ public function saveNewRatings($id_winner=null, $id_loser=null) {
 
 				
 				if (($this->Mash->save($winner))&&($this->Mash->save($loser))){
-    		
- 				
- 	  	    
-  		 
- 		echo  $this->user($id);
+    			 
 
-	 //  $this->Session->read('Mashes.nb_votes') + 1;
-    	 
- 	 // $this->Session->write('Mashes.nb_votes', $nb_votes);
+					$user=new user();
+					$user->id=$this->Auth->user('id');
+ 					 $tkt=$user->read('vote');
+ 				 	 $nv_vote=$tkt['User']['vote'] +1;
+					$user->saveField("vote",$nv_vote);
+    				 
+					
+					 
+					 
+ 				 
+  	// $nb_votes = $this->Session->read('Mashes.nb_votes') + 1;
+ 	//$this->Session->write('Mashes.nb_votes', $nb_votes);
    return $this->redirect(array('controller' => 'Mashes', 'action' => 'facemash'));
  
 
@@ -233,7 +247,9 @@ public function edit (){
 
 }
 
+public function choosedit(){
 
+}
 
 public function facemash() {
 

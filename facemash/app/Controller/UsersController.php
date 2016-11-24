@@ -44,7 +44,26 @@ public function admin() {
     
     }
 
- 
+
+
+
+public function savemodif(){
+
+
+              if ($this->request->is('post')) {
+                
+                if ($this->User->save($this->request->data)) {
+                    $this->Flash->success(__('L\'user a été modifié'));
+                    return $this->redirect(array('controller'=> 'Users','action' => 'admin'));
+                } else {
+                    $this->Flash->error(__('L\'user n\'a pas été modifié. Merci de réessayer.'));
+                }
+            }
+}
+
+ public function modifuser(){
+    
+ }
 
     public function login() {
         if ($this->request->is('post')) {
@@ -101,7 +120,7 @@ public function supuser() {
 
         if ($this->request->is('post')) {
              
-             $this->User->delete($this->request->data['User']['id']);
+            $this->User->delete($this->request->data['User']['id']);
              
            return $this->redirect(array(
                 'controller' => 'Users',
@@ -122,8 +141,7 @@ public function supuser() {
         }
 
 
-
-
+      
 
         public function delete($id =null) {
             

@@ -34,7 +34,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	//Configure::write('debug', 2);//
+	Configure::write('debug', 2);//
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
@@ -99,7 +99,7 @@
  * /app/.htaccess
  * /app/webroot/.htaccess
  *
- * And uncomment the App.baseUrl below. But keep in mind
+ * And uncmment the App.baseUrl below. But keep in mind
  * that plugin assets such as images, CSS and JavaScript files
  * will not work without URL rewriting!
  * To work around this issue you should either symlink or copy

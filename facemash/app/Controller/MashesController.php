@@ -27,7 +27,10 @@ public function isAuthorized($user) {
 }
 
  
+public function viewimg(){
 
+
+}
 
 
 public function saveNewRatings($id_winner=null, $id_loser=null) {
@@ -249,6 +252,9 @@ public function edit (){
 
 public function choosedit(){
 
+$photo_mash=$this->request->data['Mash']['nom_photo'];
+
+
 }
 
 public function facemash() {
@@ -262,7 +268,7 @@ public function facemash() {
         
         if ($id_mash1==$id_mash2){
  			return $this->redirect(array('action' => 'facemash'));
-		}elseif($this->Session->read('Mashes.nb_votes')>10){
+		}elseif($this->Auth->user('vote')>10){
 			return $this->redirect(array('action' => 'facemash_scores'));
 		}
 

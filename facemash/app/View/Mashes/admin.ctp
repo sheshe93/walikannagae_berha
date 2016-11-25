@@ -36,15 +36,23 @@
 		foreach ($scores as $mash) { ?>
  
 		<tr>
+			<?php echo $this->Form->create(false,array(
+    'url' => array('controller' => 'Mashes', 'action' => 'viewimg')));?>
+ 		
  		<td><?php echo $i ?></td>
-
-
+ 		
+ 		<?php echo $this->Form->hidden('id', array('default'=>$mash['Mash']['id']));?></input>
+		 <?php echo $this->Form->hidden('nom_photo', array('default'=>$mash['Mash']['nom_photo']));?></input>
 		 
 
 		<td><?php echo $mash['Mash']['description']  ?> </td>
+		<?php echo $this->Form->hidden('description', array('default'=>$mash['Mash']['description']));?></input>
  
 		<td><?php echo  $mash['Mash']['score'] ?></td>
- 
+		<?php echo $this->Form->hidden('score', array('default'=>$mash['Mash']['score']));?></input>
+
+
+ 		<td><?php echo $this->Form->end(__('voir')); ?></td>
 		</tr>
 
 <?php $i++;
